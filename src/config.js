@@ -1,8 +1,7 @@
-import convict from 'convict';
+import convict from 'convict'
 
 const config = convict({
-    value: {
-    }
-});
+    value: {}
+})
 
-export default config;
+export default config

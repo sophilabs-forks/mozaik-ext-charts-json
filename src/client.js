@@ -1,40 +1,40 @@
-import request from 'superagent';
-import Promise from 'bluebird';
-import cache   from 'memory-cache';
-import config  from './config';
-import jp      from 'jsonpath';
-require('superagent-bluebird-promise');
+import request from 'superagent'
+import Promise from 'bluebird'
+import cache   from 'memory-cache'
+import config  from './config'
+import jp      from 'jsonpath'
+require('superagent-bluebird-promise')
 
 /**
  * @param {Mozaik} mozaik
  */
 const client = mozaik => {
-    mozaik.loadApiConfig(config);
+    mozaik.loadApiConfig(config)
 
     const methods = {
-        value(params) {
+        data(params) {
             const {
                 url,
                 path
-            } = params;
+            } = params
 
             return request.get(url)
                 .promise()
                 .then(res => {
-                    const json = JSON.parse(res.text);
+                    const json = JSON.parse(res.text)
                     const data = path
                         ? jp.query(json, path)
-                        : json;
+                        : json
 
-                    return {data};
+                    return {data}
                 })
                 .catch(err => {
-                    console.error(err, err.stack);
-                });
+                    console.error(err, err.stack)
+                })
         }
-    };
+    }
 
-    return methods;
-};
+    return methods
+}
 
-export default client;
+export default client

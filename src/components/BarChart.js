@@ -1,6 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-import reactMixin  from 'react-mixin';
-import { ListenerMixin } from 'reflux';
 import {
     Widget,
     WidgetHeader,
@@ -19,45 +17,31 @@ import {
 const margin = { top: 20, right: 20, bottom: 60, left: 70 }
 
 
-class BarChart extends Component {
+export default class BarChart extends Component {
 
     static propTypes = {
+        url: PropTypes.string,
         title: PropTypes.string,
-        path: PropTypes.string
+        path: PropTypes.string,
+        data: PropTypes.array
     }
 
     static contextTypes = {
         theme: PropTypes.object.isRequired,
     }
 
-    static getApiRequest() {
-        const {
-            url,
-            title,
-            path
-        } = this.props;
-
+    static getApiRequest({ url, path }) {
         return {
-            id: `charts.barChart.${title}.${url}.${path}`,
-            params: { title, url, path }
-        };
-    }
-
-    onApiData(value) {
-        this.setState(value);
+            id: `charts.data.${url}.${path}`,
+            params: { url, path }
+        }
     }
 
     render() {
-        const state = this.state || {};
         const {
-           title
-        } = this.props;
-
-        // const {
-        //     data
-        // } = state;
-
-        data = [];
+           title,
+           data
+        } = this.props
 
         const { theme } = this.context
 
@@ -104,8 +88,3 @@ class BarChart extends Component {
         )
     }
 }
-
-reactMixin(BarChart.prototype, ListenerMixin);
-reactMixin(BarChart.prototype, Mozaik.Mixin.ApiConsumer);
-
-export default BarChart;
