@@ -1,0 +1,1 @@
+# Mozaïk charts json widgets

@@ -1,0 +1,11 @@
+.DS_Store
+.travis.yml
+.eslintrc
+.npmignore
+*.log*
+yarn.lock
+/test
+/src
+/preview
+/coverage
+/.nyc_output
