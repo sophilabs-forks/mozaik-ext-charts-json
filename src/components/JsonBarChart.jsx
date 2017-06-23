@@ -10,7 +10,7 @@ class JsonBarChart extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { builds: [] };
+        this.state = { data: [] };
     }
 
     getApiRequest() {
@@ -25,41 +25,41 @@ class JsonBarChart extends Component {
         };
     }
 
-    onApiData(builds) {
-        this.setState({ builds: _.clone(builds).reverse() });
+    onApiData(data) {
+        this.setState({ data: _.clone(data).reverse() });
     }
 
     render() {
-        let { title } = this.props;
+        let { title, labelX, labelY } = this.props;
         let { data } = this.state;
 
         // converts to format required by BarChart component
         let items = data.map(item => {
             return {
-                x:     item.label,
-                y:     item.value,
-                state: 'ok'
+                x: item.label,
+                y: item.value,
+                klass: item.value > 70 ? 'success' : (item.value > 40 ? 'warning' : 'failure')
             };
         });
 
         let barChartOptions = {
             mode:            'stacked',
-            xLegend:         'label',
+            xLegend:         labelX || 'Label',
             xLegendPosition: 'right',
-            yLegend:         'value',
+            yLegend:         labelY || 'Value',
             yLegendPosition: 'top',
             xPadding:        0.3,
-            barClass:        function (d) { return `result--${ d.state }`; }
+            barClass:        function (d) { return `result--${ d.klass }`; }
         };
 
         return (
             <div>
-                <div className="widget__header">
-                    <span className="widget__header__subject">{title || 'Chart'}</span>
-                    <i className="fa fa-bug" />
-                </div>
+                {title && <div className="widget__header">
+                            <span className="widget__header__subject">{ title }</span>
+                            <i className="fa fa-bar-chart" />
+                          </div>}
                 <div className="widget__body">
-                    <BarChart data={[{ data: data }]} options={barChartOptions}/>
+                    <BarChart data={[{ data: items }]} options={barChartOptions}/>
                 </div>
             </div>
         );

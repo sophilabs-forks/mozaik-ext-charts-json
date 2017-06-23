@@ -13,8 +13,8 @@ const client = mozaik => {
     mozaik.loadApiConfig(config)
 
     const methods = {
-        data(params) {
-            const { title, url, path } = params
+        jsonBarChart(params) {
+            const { url, path } = params
 
             return request.get(url)
                 .promise()
@@ -24,7 +24,7 @@ const client = mozaik => {
                         ? jp.query(json, path)
                         : json
 
-                    return { title, data }
+                    return data
                 })
                 .catch(err => {
                     console.error(err, err.stack)
