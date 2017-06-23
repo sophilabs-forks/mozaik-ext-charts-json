@@ -33,12 +33,19 @@ class JsonBarChart extends Component {
         let { title, labelX, labelY } = this.props;
         let { data } = this.state;
 
-        // converts to format required by BarChart component
-        let items = data.map(item => {
+        if (!data) {
+            data = [];
+        }
+
+        if (data.length === 1) {
+            data = data[0];
+        }
+
+        let items = _.map(data, (value, key) => {
             return {
-                x: item.label,
-                y: item.value,
-                klass: item.value > 70 ? 'success' : (item.value > 40 ? 'warning' : 'failure')
+                x: key,
+                y: value,
+                klass: value > 70 ? 'success' : (value > 40 ? 'warning' : 'failure')
             };
         });
 
@@ -69,7 +76,9 @@ class JsonBarChart extends Component {
 JsonBarChart.propTypes = {
     title: PropTypes.string,
     url: PropTypes.string.isRequired,
-    path: PropTypes.string
+    path: PropTypes.string,
+    labelX: PropTypes.string,
+    labelY: PropTypes.string
 };
 
 reactMixin(JsonBarChart.prototype, ListenerMixin);
