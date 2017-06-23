@@ -49,6 +49,8 @@ class JsonBarChart extends Component {
             };
         });
 
+        items = _.sortBy(items, _.property('x'));
+
         let barChartOptions = {
             mode:            'stacked',
             xLegend:         labelX || 'Label',
