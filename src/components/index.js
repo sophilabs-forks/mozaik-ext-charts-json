@@ -1,6 +1,6 @@
-import BarChart from './BarChart'
+import JsonBarChart from './JsonBarChart.jsx';
 
 
 export default {
-    BarChart
-}
+    JsonBarChart
+};

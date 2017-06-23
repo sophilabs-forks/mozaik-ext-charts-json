@@ -3,6 +3,7 @@ import Promise from 'bluebird'
 import cache   from 'memory-cache'
 import config  from './config'
 import jp      from 'jsonpath'
+
 require('superagent-bluebird-promise')
 
 /**
@@ -13,10 +14,7 @@ const client = mozaik => {
 
     const methods = {
         data(params) {
-            const {
-                url,
-                path
-            } = params
+            const { title, url, path } = params
 
             return request.get(url)
                 .promise()
@@ -26,7 +24,7 @@ const client = mozaik => {
                         ? jp.query(json, path)
                         : json
 
-                    return {data}
+                    return { title, data }
                 })
                 .catch(err => {
                     console.error(err, err.stack)

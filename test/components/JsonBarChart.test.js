@@ -1,7 +1,7 @@
 import test           from 'ava'
 import React          from 'react'
 import { shallow }    from 'enzyme'
-import BarChart from '../../src/components/BarChart'
+import BarChart from '../../src/components/JsonBarChart'
 import {
     WidgetLoader,
     WidgetHeader,
